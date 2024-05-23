@@ -1,0 +1,27 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+def grafica_categoricos_null(column , df):
+    null_count = df[column].isnull().sum()
+    null_row = pd.DataFrame({column: ['NaN'], 'Count': [null_count]})
+    unique = pd.concat([unique, null_row], ignore_index=True)
+
+    # Calcular el porcentaje para los valores nulos
+    total_valores = unique['Count'].sum()
+    unique['Percent'] = (unique['Count'] / total_valores) * 100
+
+    # Graficar los valores únicos de la columna WindGustDir en un gráfico de barras
+    plt.figure(figsize=(12, 6))
+    ax = sns.barplot(x='WindGustDir', y='Count', data=unique, palette='viridis')
+    for p in ax.patches:
+        ax.annotate(f"{int(p.get_height())}", (p.get_x() + p.get_width() / 2., p.get_height()),
+                    ha='center', va='center', xytext=(0, 5), textcoords='offset points')
+        ax.annotate(f"{p.get_height() / total_valores * 100:.2f}%", (p.get_x() + p.get_width() / 2., p.get_height()),
+                    ha='center', va='center', xytext=(0, -10), textcoords='offset points')
+
+    # Rotar las etiquetas del eje x para una mejor visualización
+    plt.xticks(rotation=45)
+
+    plt.title(f'Top 10 {column}]')
+    plt.show()

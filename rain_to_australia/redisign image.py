@@ -5,7 +5,7 @@ image_path = "./sidney.jpg"
 image = Image.open(image_path)
 
 # Resize the image to 1980x1400 pixels
-resized_image = image.resize((1400, 400))
+resized_image = image.resize((1100, 350))
 resized_image_path = "./aust2.jpg"
 resized_image.save(resized_image_path)
 
